@@ -1,6 +1,6 @@
 # -Java-Decompiler-by-Moddy
 Java decompiler created by me and open source.
-[WIKI]: https://github.com/ModdyCraft/Java-Decompiler-by-Moddy/wiki
+[WIKI](https://github.com/ModdyCraft/Java-Decompiler-by-Moddy/wiki)
 
 ![JavaDecompiler](https://github.com/ModdyCraft/-Java-Decompiler-by-Moddy/blob/content/javadecompiler.png)
 
