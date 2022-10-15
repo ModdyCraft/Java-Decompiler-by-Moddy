@@ -286,7 +286,7 @@ public class JavaDecompiler extends javax.swing.JFrame {
             listlog.add("> gf: Archivo generado");
             
             listlog.add("> gf: Copy and paste the following into the search bar of your file explorer");
-            listlog.add("> ejecutar: C:\\Users\\"+userName+"\\Documents\\outputsJD");
+            listlog.add("> gf: C:\\Users\\"+userName+"\\Documents\\outputsJD");
             comando = "C:\\Users\\"+userName+"\\Documents\\outputsJD";
             listlog.add("> gf: Find the file "+tfEntrada.getText()+"decompilador.bat");
             listlog.add("> gf: Read the file corroborating that it does not have malware");
