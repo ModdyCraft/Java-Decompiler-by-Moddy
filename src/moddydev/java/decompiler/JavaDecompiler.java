@@ -9,6 +9,7 @@ import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -31,7 +32,33 @@ public class JavaDecompiler extends javax.swing.JFrame {
         setTitle("Java Decompiler");
         
         String carpetName = "C:\\Users\\" + userName + "\\Documents\\outputsJD";
-        boolean f = ma.crearCarpeta(carpetName);
+        ma.crearCarpeta(carpetName);
+        
+        LanguagesConfig lc = new LanguagesConfig();
+        ArrayList<String> lenguages = lc.languges();
+        String systemLenguage = System.getProperty("user.language");
+        
+        System.out.println(systemLenguage);
+        
+        if (lenguages.contains(systemLenguage)){
+            // Menu
+            newConvertion.setText(lc.sL(systemLenguage, newConvertion.getText()));
+            clearLog.setText(lc.sL(systemLenguage, clearLog.getText()));
+            aboutOption.setText(lc.sL(systemLenguage, aboutOption.getText()));
+            exitOptionMenu.setText(lc.sL(systemLenguage, exitOptionMenu.getText()));
+            
+            // Labels
+            jLabel2.setText(lc.sL(systemLenguage, jLabel2.getText()));
+            jLabel3.setText(lc.sL(systemLenguage, jLabel3.getText()));
+            jLabel4.setText(lc.sL(systemLenguage, jLabel4.getText()));
+            jLabel5.setText(lc.sL(systemLenguage, jLabel5.getText()));
+            
+            // Buttons
+            bGeneratorComand.setText(lc.sL(systemLenguage, bGeneratorComand.getText()));
+            bGenerateFile.setText(lc.sL(systemLenguage, bGenerateFile.getText()));
+            bExecute.setText(lc.sL(systemLenguage, bExecute.getText()));
+            bCopy.setText(lc.sL(systemLenguage, bCopy.getText()));
+        }
     }
     
     @Override
@@ -49,17 +76,18 @@ public class JavaDecompiler extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTextFieldEntrada = new javax.swing.JTextField();
-        jTextFieldDestino = new javax.swing.JTextField();
-        generador = new javax.swing.JButton();
-        ejecutador = new javax.swing.JButton();
-        jTextFieldCarpet = new javax.swing.JTextField();
+        bGeneratorComand = new javax.swing.JButton();
+        tfEntrada = new javax.swing.JTextField();
+        tfDestino = new javax.swing.JTextField();
+        bGenerateFile = new javax.swing.JButton();
+        tfRoute = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         listlog = new java.awt.List();
-        jButton1 = new javax.swing.JButton();
+        bCopy = new javax.swing.JButton();
+        bExecute = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         newConvertion = new javax.swing.JMenuItem();
@@ -71,35 +99,44 @@ public class JavaDecompiler extends javax.swing.JFrame {
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setResizable(false);
 
-        jTextFieldEntrada.setToolTipText("");
-
-        generador.setText("Generar comando");
-        generador.addMouseListener(new java.awt.event.MouseAdapter() {
+        bGeneratorComand.setText("Generate Command");
+        bGeneratorComand.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                generadorMouseClicked(evt);
+                bGeneratorComandMouseClicked(evt);
             }
         });
 
-        ejecutador.setText("Ejecutar");
-        ejecutador.addMouseListener(new java.awt.event.MouseAdapter() {
+        tfEntrada.setToolTipText("");
+
+        bGenerateFile.setText("Generate File");
+        bGenerateFile.setMaximumSize(new java.awt.Dimension(139, 25));
+        bGenerateFile.setMinimumSize(new java.awt.Dimension(139, 25));
+        bGenerateFile.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                ejecutadorMouseClicked(evt);
+                bGenerateFileMouseClicked(evt);
             }
         });
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel2.setText("Direccion");
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel2.setText("Route");
 
-        jLabel3.setText("Carpeta con archivos");
+        jLabel3.setText("Folder with files");
 
-        jLabel4.setText("Destino");
+        jLabel4.setText("Destination folder");
 
         jLabel5.setText("Output");
 
-        jButton1.setText("COPIAR");
-        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+        bCopy.setText("Copy");
+        bCopy.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton1MouseClicked(evt);
+                bCopyMouseClicked(evt);
+            }
+        });
+
+        bExecute.setText("EXECUTE");
+        bExecute.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bExecuteActionPerformed(evt);
             }
         });
 
@@ -150,136 +187,121 @@ public class JavaDecompiler extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextFieldCarpet, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel2)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(listlog, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
+                    .addComponent(tfRoute)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1))
+                        .addComponent(bCopy))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(generador)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(ejecutador, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jTextFieldEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextFieldDestino, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(tfEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(tfDestino, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addComponent(bGeneratorComand)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(bGenerateFile, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(bExecute, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(11, 11, 11)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextFieldCarpet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(tfRoute, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextFieldDestino, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextFieldEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tfDestino, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tfEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(generador)
-                    .addComponent(ejecutador))
+                    .addComponent(bGeneratorComand)
+                    .addComponent(bGenerateFile, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
+                .addComponent(bExecute)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(jButton1))
+                    .addComponent(bCopy)
+                    .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(listlog, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(listlog, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
+                .addGap(12, 12, 12))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
     
-    String first = "\"C:\\Program Files\\JavaDecompiler-by-Moddy\\java-decompiler.jar\"";
+    String f1 = "";
+    String first = "\"C:\\Program Files\\JavaDecompiler-by-Moddy\\data\\Dependencies\\java-decompiler.jar\"";
     String second = "org.jetbrains.java.decompiler.main.decompiler.ConsoleDecompiler -dgs=true";
     String carpet = "";
     String entrada = "";
     String destino = "";
     String comando;
     
-    private void generadorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_generadorMouseClicked
-        entrada = jTextFieldEntrada.getText() + "/";
-        destino = jTextFieldDestino.getText() + "/";
+    private void bGeneratorComandMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bGeneratorComandMouseClicked
+        entrada = tfEntrada.getText() + "/";
+        destino = tfDestino.getText() + "/";
         
-        if (!jTextFieldEntrada.getText().isEmpty() && !jTextFieldDestino.getText().isEmpty()){
+        if (!tfEntrada.getText().isEmpty() && !tfDestino.getText().isEmpty()){
             comando = "java -cp " + first + " " + second + " " + entrada + " " + destino;
-            listlog.add("> generar comando: Comando Generado");
+            listlog.add("> gc: Generated Command");
         }else{
-            listlog.add("> Error: generar comando: Rellene los siguientes campos -> Carpeta con archivos y Destino");
+            listlog.add("> Error: gc: Fill in the following fields -> Folder with files and Destination folder");
         }
-    }//GEN-LAST:event_generadorMouseClicked
+    }//GEN-LAST:event_bGeneratorComandMouseClicked
 
-    private void ejecutadorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ejecutadorMouseClicked
-        listlog.add("> ejecutar: Comprobando .");
-        
-        if (!jTextFieldEntrada.getText().isEmpty() && !jTextFieldDestino.getText().isEmpty() && !jTextFieldCarpet.getText().isEmpty()){
-            listlog.add("> ejecutar: Comprobado");
+    private void bGenerateFileMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bGenerateFileMouseClicked
+        if (!tfEntrada.getText().isEmpty() && !tfDestino.getText().isEmpty() && !tfRoute.getText().isEmpty()){
             
-            carpet = jTextFieldCarpet.getText();
-            entrada = jTextFieldEntrada.getText() + "/";
-            destino = jTextFieldDestino.getText() + "/";
-            
-            listlog.add("> ejecutar: Estableciendo Comandos");
+            carpet = tfRoute.getText();
+            entrada = tfEntrada.getText() + "/";
+            destino = tfDestino.getText() + "/";
             
             String cm1 = "cd "+ carpet;
             String cm2 = "java -cp " + first + " " + second + " " + entrada + " " + destino;
-            
-            listlog.add("> ejecutar: Armando Comandos");
-        
-            String uni = jTextFieldEntrada.getText()+"decompilador.bat";
+            String uni = tfEntrada.getText()+"decompilador.bat";
             String df = "C:\\Users\\"+ userName + "\\Documents\\outputsJD\\"+ uni;
-            
-            listlog.add("> ejecutar: Creando archivo en archivos temporales .");
         
             ma.crearArchivo(df);
             
-            listlog.add("> ejecutar: Estableciendo Comandos ...");
-            
-            listlog.add("> ejecutar: Escribiendo archivo .");
-            
             ma.escribirArchivo(df, cm1, false, true);
-            
-            listlog.add("> ejecutar: Escribiendo archivo ..");
             
             ma.escribirArchivo(df, cm2, false, true);
             
-            listlog.add("> ejecutar: Escribiendo archivo ...");
+            listlog.add("> gf: Archivo generado");
             
-            listlog.add("> ejecutar: Archivo generado");
-            
-            listlog.add("> ejecutar: Copia y pega lo siguiente en la barra de busqueda de tu explorador de archivos");
+            listlog.add("> gf: Copy and paste the following into the search bar of your file explorer");
             listlog.add("> ejecutar: C:\\Users\\"+userName+"\\Documents\\outputsJD");
             comando = "C:\\Users\\"+userName+"\\Documents\\outputsJD";
-            listlog.add("> ejecutar: Encuentra el archivo Decompilador.bat.txt");
-            listlog.add("> ejecutar: Lee el archivo corroborando que no tiene malware");
-            listlog.add("> ejecutar: Si ya corroboraste puedes borrar la extencion .txt y ejecutar el programa :)");
-            listlog.add("> ejecutar: Busque en su carpeta de Documentos");
+            listlog.add("> gf: Find the file "+tfEntrada.getText()+"decompilador.bat");
+            listlog.add("> gf: Read the file corroborating that it does not have malware");
+            listlog.add("> gf: Search your Documents folder");
         }else{
-            listlog.add("> ejecutar: Comprobando ...");
-            listlog.add("> ejecutar: Comprobado");
-            listlog.add("> Error: ejecutar: Rellene Todos Los campos");
+            listlog.add("> Error: gf: Fill in all fields");
         }
-    }//GEN-LAST:event_ejecutadorMouseClicked
+    }//GEN-LAST:event_bGenerateFileMouseClicked
 
-    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+    private void bCopyMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bCopyMouseClicked
         Clipboard cb = Toolkit.getDefaultToolkit().getSystemClipboard();
         StringSelection strSel = new StringSelection(comando);
         
         cb.setContents(strSel, null);
-    }//GEN-LAST:event_jButton1MouseClicked
+    }//GEN-LAST:event_bCopyMouseClicked
 
     private void exitOptionMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitOptionMenuActionPerformed
         System.exit(0);
@@ -291,9 +313,9 @@ public class JavaDecompiler extends javax.swing.JFrame {
         entrada = "";
         destino = "";
         listlog.removeAll();
-        jTextFieldCarpet.setText("");
-        jTextFieldEntrada.setText("");
-        jTextFieldDestino.setText("");
+        tfRoute.setText("");
+        tfEntrada.setText("");
+        tfDestino.setText("");
     }//GEN-LAST:event_newConvertionActionPerformed
 
     private void clearLogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearLogActionPerformed
@@ -308,6 +330,31 @@ public class JavaDecompiler extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_aboutOptionActionPerformed
 
+    private void bExecuteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bExecuteActionPerformed
+        String file = "C:\\Windows\\Temp\\JavaDecompilerJD\\comando.bat";
+        
+        carpet = tfRoute.getText();
+        entrada = tfEntrada.getText() + "/";
+        destino = tfDestino.getText() + "/";
+        
+        if (!tfRoute.getText().isEmpty() && !tfEntrada.getText().isEmpty() && !tfDestino.getText().isEmpty()){
+            ma.crearCarpeta("C:\\Windows\\Temp\\JavaDecompilerJD");
+            ma.crearArchivo(file);
+            ma.escribirArchivo(file, "cd " + carpet, false, true);
+            ma.escribirArchivo(file, "java -cp " + first + " " + second + " " + entrada + " " + destino, false, true);
+            listlog.add("> excute: Running");
+            try {
+                Runtime app = Runtime.getRuntime();
+                app.exec("cmd.exe /K C:/Windows/Temp/JavaDecompilerJD/comando.bat");
+                listlog.add("> excute: Process completed");
+            } catch (IOException ex) {
+                Logger.getLogger(JavaDecompiler.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }else{
+            listlog.add("> execute: Fill in all fields");
+        }
+    }//GEN-LAST:event_bExecuteActionPerformed
+ 
     /**
      * @param args the command line arguments
      */
@@ -345,21 +392,22 @@ public class JavaDecompiler extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem aboutOption;
+    private javax.swing.JButton bCopy;
+    private javax.swing.JButton bExecute;
+    private javax.swing.JButton bGenerateFile;
+    private javax.swing.JButton bGeneratorComand;
     private javax.swing.JMenuItem clearLog;
-    private javax.swing.JButton ejecutador;
     private javax.swing.JMenuItem exitOptionMenu;
-    private javax.swing.JButton generador;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JTextField jTextFieldCarpet;
-    private javax.swing.JTextField jTextFieldDestino;
-    private javax.swing.JTextField jTextFieldEntrada;
     private java.awt.List listlog;
     private javax.swing.JMenuItem newConvertion;
+    private javax.swing.JTextField tfDestino;
+    private javax.swing.JTextField tfEntrada;
+    private javax.swing.JTextField tfRoute;
     // End of variables declaration//GEN-END:variables
 }
