@@ -21,7 +21,7 @@ public class LanguagesConfig {
     }
     
     public String sL(String l, String k){
-        Map<String, Map> lenguages = new HashMap<>();
+        Map<String, Map> languages = new HashMap<>();
         
         // Español //
         Map<String, String> es = new HashMap<>();
@@ -45,11 +45,11 @@ public class LanguagesConfig {
         es.put("EXECUTE", "EJECUTAR");
         es.put("Copy", "Copiar");
         
-        lenguages.put("es", es);
+        languages.put("es", es);
         
         
         
-        Map<String, String> legungageSelected = lenguages.get(l);
+        Map<String, String> legungageSelected = languages.get(l);
         String valor = legungageSelected.get(k);
         return valor;
     }
