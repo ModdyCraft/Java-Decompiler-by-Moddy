@@ -49,8 +49,8 @@ public class LanguagesConfig {
         
         
         
-        Map<String, String> legungageSelected = languages.get(l);
-        String valor = legungageSelected.get(k);
+        Map<String, String> languageSelected = languages.get(l);
+        String valor = languageSelected.get(k);
         return valor;
     }
 }
